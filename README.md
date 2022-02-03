@@ -1,4 +1,4 @@
-![JavaScript Game Boilerplate](/img/jsgb.png "JavaScript Game Boilerplate")
+![JavaScript Game Boilerplate](img/JSGB.png "JavaScript Game Boilerplate")
 
 Simple boilerplate code for making games using JavaScript.
 
