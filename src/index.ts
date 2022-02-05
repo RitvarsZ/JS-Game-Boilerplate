@@ -1,15 +1,13 @@
 import Game from './game';
-
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+import Config from './config';
 
 let canvas = document.getElementById('game') as HTMLCanvasElement;
 let ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-canvas.width = GAME_WIDTH;
-canvas.height = GAME_HEIGHT;
+canvas.width = Config.GAME_WIDTH;
+canvas.height = Config.GAME_HEIGHT;
 
-let game = new Game(GAME_WIDTH, GAME_HEIGHT);
+let game = new Game();
 let time = 0;
 
 function gameLoop(timestamp: number) {
@@ -17,7 +15,7 @@ function gameLoop(timestamp: number) {
     time = timestamp;
 
     // Clear the canvas before each frame.
-    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    ctx.clearRect(0, 0, Config.GAME_WIDTH, Config.GAME_HEIGHT);
 
     game.update(dt);
     game.draw(ctx);
