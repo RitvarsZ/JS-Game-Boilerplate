@@ -14,7 +14,7 @@ export default class Player extends Object {
     public inputHandler: InputHandler;
     public duckingSize: V2;
     public standingSize: V2;
-    public maxSpeed: number = 0.7;
+    public maxSpeed: number = 5;
 
     constructor(position: V2, size: V2, inputHandler: InputHandler) {
         super(position, size);
@@ -31,9 +31,9 @@ export default class Player extends Object {
         switch (this.state) {
             case PlayerState.STANDING:
                 if (this.inputHandler.isKeyDown["ArrowLeft"]) {
-                    this.walk(-.001);
+                    this.walk(0);
                 } else if (this.inputHandler.isKeyDown["ArrowRight"]) {
-                    this.walk(.001);
+                    this.walk(1);
                 } else if (this.inputHandler.isKeyDown["ArrowUp"]) {
                     this.jump();
                 } else if (this.inputHandler.isKeyDown["ArrowDown"]) {
@@ -44,18 +44,18 @@ export default class Player extends Object {
                 if (this.inputHandler.isKeyDown["ArrowUp"]) {
                     this.jump();
                 } else if (this.inputHandler.isKeyDown["ArrowLeft"]) {
-                    this.walk(-.001);
+                    this.walk(0);
                 } else if (this.inputHandler.isKeyDown["ArrowRight"]) {
-                    this.walk(.001);
+                    this.walk(1);
                 } else if (!this.inputHandler.isKeyDown["ArrowLeft"] && !this.inputHandler.isKeyDown["ArrowRight"]) {
                     this.stand();
                 }
                 break;
             case PlayerState.JUMPING:
                 if (this.inputHandler.isKeyDown["ArrowLeft"]) {
-                    this.acceleration.x += -.001;
+                    this.acceleration.x += -0.1;
                 } else if (this.inputHandler.isKeyDown["ArrowRight"]) {
-                    this.acceleration.x += .001;
+                    this.acceleration.x += 0.1;
                 } else if (this.velocity.y == 0) {
                     this.stand();
                 }
@@ -70,7 +70,7 @@ export default class Player extends Object {
 
     public jump(): void {
         this.state = PlayerState.JUMPING;
-        this.acceleration.y += -0.1;
+        this.acceleration.y += -5;
     }
 
     public duck(): void {
@@ -81,11 +81,16 @@ export default class Player extends Object {
     public stand(): void {
         this.size = this.standingSize;
         this.state = PlayerState.STANDING;
+        this.velocity.x *= 0.7;
     }
 
     public walk(direction: number): void {
         this.state = PlayerState.WALKING;
-        this.acceleration.x += direction;
+        if (direction > 0) {
+            this.acceleration.x += 0.1;
+        } else {
+            this.acceleration.x += -0.1;
+        }
     }
 
     public clampSpeed(): void {

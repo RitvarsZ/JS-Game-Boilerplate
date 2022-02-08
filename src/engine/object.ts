@@ -27,14 +27,14 @@ export default class Object {
         }
 
         // Apply gravity.
-        let gravity = new V2(0, Config.GRAVITY*this.mass*(60/dt));
+        let gravity = new V2(0, Config.GRAVITY*this.mass);
         this.applyForce(gravity);
 
         // Apply friction.
         let friction = this.velocity
             .scale(-1) // Opposite to velocity
             .normalize() // Normalize to unit vector
-            .scale(Config.FRICTION*(60/dt)); // Scale by friction constant
+            .scale(Config.FRICTION); // Scale by friction constant
         this.applyForce(friction);
     }
 
@@ -43,8 +43,8 @@ export default class Object {
             return;
         }
 
-        this.velocity = this.velocity.add(this.acceleration.scale(60/dt));
-        this.position = this.position.add(this.velocity.scale(60/dt));
+        this.velocity = this.velocity.add(this.acceleration);
+        this.position = this.position.add(this.velocity);
 
         // Temporary collision detection.
         if (this.position.y + this.size.y > Config.GAME_HEIGHT) {
